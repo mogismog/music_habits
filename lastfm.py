@@ -19,6 +19,7 @@ def _get_root_xml(web_page):
 	root = tree.getroot()
 	return root
 
+
 def lastfm_xml_to_df(web_page):
 	"""Scrape XML from last.fm and put into pandas DataFrame."""
 
@@ -32,6 +33,7 @@ def lastfm_xml_to_df(web_page):
 		             'timestamp': pd.to_datetime(int(track.find('date').attrib['uts']), unit='s')}
 		return_list.append(temp_dict)
 	return pd.DataFrame(return_list)
+
 
 def get_total_pages(web_page, limit=500):
 	"""Helper function to find total number of XML
@@ -50,8 +52,10 @@ def grab_all_scrobbles(web_page=BASE_WEB_PAGE, limit=500, saved_df_name=None,
 
 	http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=some_user_name&api_key=some_key
 
-	We can then 
+	We can then grab all of our scrobbles from last.fm!
 
+	Parameters
+	----------
 	web_page : str
 	    Base webpage pointing to last.fm's API service that will
 	    get recent tracks. The default pulls information from the
@@ -65,6 +69,11 @@ def grab_all_scrobbles(web_page=BASE_WEB_PAGE, limit=500, saved_df_name=None,
 	n_proc : int
 	    Number of processors to use when scraping last.fm's data. If
 	    set to -1, the function uses all processors available.
+
+	Returns
+	-------
+	df : pandas DataFrame
+	    DataFrame with last.fm scrobbles information.
 	"""
 
 	# In order to do multiprocessing, we need to get the total
@@ -80,6 +89,6 @@ def grab_all_scrobbles(web_page=BASE_WEB_PAGE, limit=500, saved_df_name=None,
 
 	# Save (if applicable)
 	if saved_df_name:
-		saved_df_name.to_pickle(saved_df_name)
+		df.to_pickle(saved_df_name)
 
 	return df
