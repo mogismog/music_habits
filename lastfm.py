@@ -21,7 +21,18 @@ def _get_root_xml(web_page):
 
 
 def lastfm_xml_to_df(web_page):
-	"""Scrape XML from last.fm and put into pandas DataFrame."""
+	"""Scrape XML from last.fm and put into pandas DataFrame.
+
+	Parameters
+	----------
+	web_page : str
+	    last.fm XML page to scrape.
+
+	Returns
+	-------
+	df : pandas DataFrame
+	    The scraped last.fm data!
+	"""
 
 	root = _get_root_xml(web_page)
 	return_list = []
