@@ -81,7 +81,7 @@ def grab_all_scrobbles(web_page=BASE_WEB_PAGE, limit=500, saved_df_name=None,
 	total_pages = get_total_pages(web_page, limit=limit)
 
 	# Scrape all the XML data and throw into a list of pandas DataFrames
-	list_of_dfs = Parallel()(delayed(lastfm_xml_to_df)
+	list_of_dfs = Parallel(n_proc)(delayed(lastfm_xml_to_df)
 		(web_page + '&limit={}&page={}'.format(limit, p)) for p in xrange(1, total_pages + 1))
 
 	# concat!
